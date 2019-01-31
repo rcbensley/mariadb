@@ -1,0 +1,1 @@
+{"columns": "*", "database": "employees", "table": "salaries", "where": "", "date": "2018-12-05", "outfile": "INTO OUTFILE '/tmp/employees_salaries_2018-12-05.tsv'"}
