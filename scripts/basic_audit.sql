@@ -5,9 +5,16 @@ SELECT @@hostname,@@port,@@version,@@version_comment,
     @@log_error, @@log_warnings, @@slow_query_log;
 
 -- User Databases, engines and sizes.
-SELECT table_schema, engine, 
+SELECT t.*,
+    SUM(t.engine_count) AS engine_count
+FROM
+(SELECT table_schema,
+ engine,
+    COUNT(engine) AS engine_count,
     ROUND(((DATA_LENGTH + INDEX_LENGTH)/1024/1024), 2) as DB_SIZE_MB,
     ROUND(DATA_FREE/1024/1024) as DATA_FREE_MB
-    GROUP BY table_schema, engine
-    ORDER BY 3,1,2 DESC;
+    FROM information_schema.tables
+        GROUP BY table_schema, engine) t
+GROUP BY t.table_schema, t.engine
+ORDER BY t.DB_SIZE_MB DESC;
 
