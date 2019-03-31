@@ -2,7 +2,7 @@
 SELECT @@hostname,@@port,@@version,@@version_comment,
     @@log_bin, @@binlog_format, @@log_slave_updates, @@expire_logs_days,
     @@innodb_flush_log_at_trx_commit, @@sync_binlog, @@sql_mode,
-    @@log_error, @@log_warnings, @@slow_query_log;
+    @@log_error, @@log_warnings, @@slow_query_log\G
 
 -- User Databases, engines and sizes.
 SELECT t.*,
