@@ -54,7 +54,12 @@ class db:
             sql = "SELECT _key,_value FROM kvdb"
         else:
             sql = "SELECT _key,_value FROM kvdb WHERE _key='{}'".format(k)
-        return self._query(sql)
+
+        rows = self._query(sql)
+        for row in rows:
+            row['_value'] = self.str2json(row['_value'])
+
+        return rows
 
     def set(self, k, v):
         v = self.dict2json(v)
