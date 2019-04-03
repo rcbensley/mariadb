@@ -3,11 +3,9 @@ import pymysql
 
 
 class db:
-    def __init__(self):
-        self.result = list()
-        self.count = 0
+    def __init__(self, database='test'):
         self._db_opts = {'host': '127.0.0.1',
-                         'database': 'test',
+                         'database': database,
                          'autocommit': True,
                          'read_default_file': '~/.my.cnf',
                          'cursorclass': pymysql.cursors.DictCursor}
@@ -56,8 +54,10 @@ class db:
             sql = "SELECT _key,_value FROM kvdb WHERE _key='{}'".format(k)
 
         rows = self._query(sql)
-        for row in rows:
-            row['_value'] = self.str2json(row['_value'])
+        if rows:
+            for row in rows:
+                if ['value'] in row:
+                    row['_value'] = self.str2json(row['_value'])
 
         return rows
 
