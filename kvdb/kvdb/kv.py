@@ -15,7 +15,7 @@ class db:
         create = ("CREATE TABLE kvdb ("
                   "id bigint(20) NOT NULL AUTO_INCREMENT,"
                   "_key varchar(128) NOT NULL,"
-                  "_value JSON NOT NULL,"
+                  "_value JSON NOT NULL CHECK (JSON_VALID(_value)),"
                   "PRIMARY KEY (id), UNIQUE KEY (_key)"
                   ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4")
         self._query(drop)
@@ -40,12 +40,9 @@ class db:
             return v
 
     def str2json(self, v):
-        if type(v) is str:
-            return json.loads(v.replace("'", "\""))
-        elif type(v) is dict:
-            return self.dict2json(v)
-        else:
-            return v
+        f_v = v.replace("'", "\"")
+        f_j = json.loads(f_v)
+        return f_j
 
     def get(self, k=None):
         if k is None:
@@ -56,7 +53,7 @@ class db:
         rows = self._query(sql)
         if rows:
             for row in rows:
-                if ['value'] in row:
+                if '_value' in row:
                     row['_value'] = self.str2json(row['_value'])
 
         return rows
@@ -70,9 +67,9 @@ class db:
     def update(self, k, v):
         old_row = self.get(k)
         if old_row:
-            value = self.str2json(old_row[0]['_value'])
+            value = old_row[0]['_value']
+            value.update(v)
+            self.set(k, value)
         else:
             return False
 
-        value.update(v)
-        self.set(k, value)
