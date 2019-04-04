@@ -1,7 +1,10 @@
-Psst, hey, kid. Got dictionaries?
-Wanna store those dictionaries?
-Check it out, I got a Key Value Database, or kvdb.
+Psst, hey, kid, got some dictionaries?
 
+Wanna store those dictionaries?
+
+Check it out, a Key Value Database, or kvdb, in Python.
+
+We can:
 * Store dictionaries.
 * Retrieve dictionaries.
 * Update dictionaries.
