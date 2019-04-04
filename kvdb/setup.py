@@ -5,9 +5,9 @@ from setuptools import setup
 
 setup(
     name='kvdb',
-    version='0.0.1',
+    version='2',
     url='https://github.com/rcbensley/mariadb-dba/kvdb',
-    description=';)',
+    description='Key-Value-Database',
     packages=['kv'],
     install_requires=['pymysql', ],
     keywords='kvdb',

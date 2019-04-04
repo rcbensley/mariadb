@@ -1,34 +1,59 @@
-Key Value Database
-------------------
+Psst, hey, kid. Got dictionaries?
+Wanna store those dictionaries?
+Check it out, I got a Key Value Database, or kvdb.
 
-To better understand what these NoSQL kids are on about, let's take a look at a Key Value Database...
-In this case, keys are unique strings, and values are Python Dictionaries.
+* Store dictionaries.
+* Retrieve dictionaries.
+* Update dictionaries.
+* Delete dictionaries (New for version 2).
 
-Write a key and value to a database. The key is a colour, red, and the value is the 8bit integer value.
 
+### Example
+
+Import and setup.
 ```
 import kvdb
 
 db = kvdb.db()
-db.set('red', {'rgb': [255, 0, 0]})
+db.setup()
 ```
 
-Get the value back
+Make and store a dictionary.
 ```
-print(db.get('red'))
+ice_king_stats = {'name': 'Ice King', 'class': 'Wizard', 'iz_cool': True}
+db.set('ice_king', ice_king_stats)
 ```
 
-But then, once both tests have been run, and a quick query on a certain local database...
+Wicked. Now let's read if back!
 ```
-mariadb dba@127.0.0.1:test> select * from kvdb;
-+----+-------------------------------------+--------------------------------------------------------------------------------------+
-| id | _key                                | _value                                                                               |
-+----+-------------------------------------+--------------------------------------------------------------------------------------+
-| 1  | Do Androids Dream of Electric Sheep | {"format": "Paperback", "pages": "210", "author": "Phillip K. Dick"}                 |
-| 2  | Blade Runner                        | {"format": "DVD", "running_time": "117 minutes", "Director": "Ridley Scott"}         |
-| 3  | Blade Runner 2049                   | {"format": "Blu-Ray", "running_time": "163 minutes", "Director": "Denis Villeneuve"} |
-| 5  | red                                 | {"rgb": [255, 0, 0]}                                                                 |
-+----+-------------------------------------+--------------------------------------------------------------------------------------+
-4 rows in set
-Time: 0.014s
+print(db.get('ice_king'))
+[{'_key': 'ice_king', '_value': {'name': 'Ice King', 'class': 'Wizard', 'iz_cool': True}}]
+>>> fixed_stats = {'iz_cool': False}
 ```
+
+Something is not quite right. Let's fix that key with the correct values.
+```
+fixed_stats = {'iz_cool': False}
+db.update('ice_king', fixed_stats)
+
+print(db.get('ice_king'))
+[{'_key': 'ice_king', '_value': {'name': 'Ice King', 'class': 'Wizard', 'iz_cool': False}}]
+```
+Fixed!
+
+What if we don't want to do any of that messy updating? Simon says, Wizards Rule!
+
+```
+cool_stats = {'Wizards': 'Rule'}
+db.set('ice_king', cool_stats)
+print(db.get('ice_king'))
+[{'_key': 'ice_king', '_value': {'Wizards': 'Rule'}}]
+```
+
+### NEW! In v2.
+
+Let's just forget the whole thing.
+```
+db.delete('ice_king')
+```
+

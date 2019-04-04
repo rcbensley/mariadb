@@ -21,7 +21,7 @@ class db:
         self._query(drop)
         self._query(create)
 
-    def _query(self, sql):
+    def _query(self, sql: str):
         con = pymysql.connect(**self._db_opts)
         cur = con.cursor()
         cur.execute(sql)
@@ -33,18 +33,15 @@ class db:
         else:
             return False
 
-    def dict2json(self, v):
-        if type(v) is dict:
-            return(json.dumps(v))
-        else:
-            return v
+    def dict2json(self, v: dict):
+        return(json.dumps(v))
 
-    def str2json(self, v):
+    def str2json(self, v: str):
         f_v = v.replace("'", "\"")
         f_j = json.loads(f_v)
         return f_j
 
-    def get(self, k=None):
+    def get(self, k: dict = None):
         if k is None:
             sql = "SELECT _key,_value FROM kvdb"
         else:
@@ -58,13 +55,13 @@ class db:
 
         return rows
 
-    def set(self, k, v):
+    def set(self, k: str, v: dict):
         v = self.dict2json(v)
         sql = ("INSERT INTO kvdb (_key, _value) VALUES  ('{k}', '{v}') "
                "ON DUPLICATE KEY UPDATE _value='{v}'").format(k=k, v=v)
         self._query(sql)
 
-    def update(self, k, v):
+    def update(self, k: str, v: dict):
         old_row = self.get(k)
         if old_row:
             value = old_row[0]['_value']
@@ -72,4 +69,8 @@ class db:
             self.set(k, value)
         else:
             return False
+
+    def delete(self, k: str):
+        sql = "DELETE FROM kvdb WHERE _key='{}'".format(k)
+        self._query(sql)
 
