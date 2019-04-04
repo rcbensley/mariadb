@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
     name='kvdb',
-    version='2',
+    version='3',
     url='https://github.com/rcbensley/mariadb-dba/kvdb',
     description='Key-Value-Database',
     packages=['kvdb'],

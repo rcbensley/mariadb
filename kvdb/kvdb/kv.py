@@ -14,25 +14,33 @@ class db:
                          'cursorclass': pymysql.cursors.DictCursor}
 
     def setup(self):
-        if self.history is True:
-            history_dict = {'row_start': 'GENERATED ALWAYS AS ROW START',
-                            'row_end': 'GENERATED ALWAYS AS ROW END',
-                            'period': 'PERIOD FOR SYSTEM_TIME(created, updated)',
-                            'versioning': 'WITH SYSTEM VERSIONING'}
         drop = "DROP TABLE IF EXISTS kvdb"
-        create = ("CREATE TABLE kvdb ("
-                  "id bigint(20) NOT NULL AUTO_INCREMENT,"
-                  "_key varchar(128) NOT NULL,"
-                  "_value JSON NOT NULL CHECK (JSON_VALID(_value)),"
-                  "created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP()",
-                  "updated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP() "
-                  "ON UPDATE CURRENT_TIMESTAMP()",
-                  "PRIMARY KEY (id),"
-                  "UNIQUE KEY (_key),"
-                  "INDEX idx_date (created, updated)"
-                  ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4")
+        create = (
+            "CREATE TABLE kvdb ("
+            "id bigint(20) NOT NULL AUTO_INCREMENT,"
+            "_key varchar(128) NOT NULL,"
+            "_value JSON NOT NULL CHECK (JSON_VALID(_value)),"
+            "created timestamp NOT NULL "
+            "DEFAULT CURRENT_TIMESTAMP() ,"
+            "updated timestamp NOT NULL "
+            "DEFAULT CURRENT_TIMESTAMP() "
+            "ON UPDATE CURRENT_TIMESTAMP(),"
+            "PRIMARY KEY (id),"
+            "UNIQUE KEY (_key),"
+            "INDEX idx_date (created, updated)"
+            ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4")
+
+        add_history = (
+            "ALTER TABLE kvdb"
+            "ADD COLUMN ts TIMESTAMP(6) GENERATED ALWAYS AS ROW START, "
+            "ADD COLUMN te TIMESTAMP(6) GENERATED ALWAYS AS ROW END,"
+            "ADD PERIOD FOR SYSTEM_TIME(ts, te),"
+            "ADD SYSTEM VERSIONING;")
+
         self._query(drop)
         self._query(create)
+        if self.history is True:
+            self._query(add_history)
 
     def _query(self, sql: str):
         con = pymysql.connect(**self._db_opts)
