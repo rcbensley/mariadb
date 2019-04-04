@@ -3,7 +3,10 @@ import pymysql
 
 
 class db:
-    def __init__(self, database='test'):
+    def __init__(self,
+                 database='test',
+                 history=False):
+        self.history = history
         self._db_opts = {'host': '127.0.0.1',
                          'database': database,
                          'autocommit': True,
@@ -11,12 +14,22 @@ class db:
                          'cursorclass': pymysql.cursors.DictCursor}
 
     def setup(self):
+        if self.history is True:
+            history_dict = {'row_start': 'GENERATED ALWAYS AS ROW START',
+                            'row_end': 'GENERATED ALWAYS AS ROW END',
+                            'period': 'PERIOD FOR SYSTEM_TIME(created, updated)',
+                            'versioning': 'WITH SYSTEM VERSIONING'}
         drop = "DROP TABLE IF EXISTS kvdb"
         create = ("CREATE TABLE kvdb ("
                   "id bigint(20) NOT NULL AUTO_INCREMENT,"
                   "_key varchar(128) NOT NULL,"
                   "_value JSON NOT NULL CHECK (JSON_VALID(_value)),"
-                  "PRIMARY KEY (id), UNIQUE KEY (_key)"
+                  "created timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP()",
+                  "updated timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP() "
+                  "ON UPDATE CURRENT_TIMESTAMP()",
+                  "PRIMARY KEY (id),"
+                  "UNIQUE KEY (_key),"
+                  "INDEX idx_date (created, updated)"
                   ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4")
         self._query(drop)
         self._query(create)
@@ -41,11 +54,17 @@ class db:
         f_j = json.loads(f_v)
         return f_j
 
-    def get(self, k: dict = None):
-        if k is None:
-            sql = "SELECT _key,_value FROM kvdb"
+    def get(self, k: dict = None, when: str = None):
+        if when is not None:
+            h = "FOR SYSTEM_TIME AS OF TIMESTAMP'{}'".format(when)
         else:
-            sql = "SELECT _key,_value FROM kvdb WHERE _key='{}'".format(k)
+            h = ""
+
+        if k is None:
+            sql = "SELECT _key,_value FROM kvdb {h}".format(h=h)
+        else:
+            sql = ("SELECT _key,_value FROM kvdb "
+                   "WHERE _key='{k}' {h}").format(k=k, h=h)
 
         rows = self._query(sql)
         if rows:
@@ -73,4 +92,3 @@ class db:
     def delete(self, k: str):
         sql = "DELETE FROM kvdb WHERE _key='{}'".format(k)
         self._query(sql)
-

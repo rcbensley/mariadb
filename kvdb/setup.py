@@ -8,7 +8,7 @@ setup(
     version='2',
     url='https://github.com/rcbensley/mariadb-dba/kvdb',
     description='Key-Value-Database',
-    packages=['kv'],
+    packages=['kvdb'],
     install_requires=['pymysql', ],
     keywords='kvdb',
 )

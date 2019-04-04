@@ -57,3 +57,13 @@ Let's just forget the whole thing.
 db.delete('ice_king')
 ```
 
+## Changelog
+
+### v1
+Set keys. Get keys. Update keys. Key creation and updating is all still handled within the Python process.
+
+### v2
+Delete keys! Can you believe it? Removed type checks, added type notation to the functions parameters.
+
+### v3
+
