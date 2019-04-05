@@ -53,12 +53,26 @@ print(db.get('ice_king'))
 [{'_key': 'ice_king', '_value': {'Wizards': 'Rule'}}]
 ```
 
-### NEW! In v2.
+### NEW In v2!
 
 Let's just forget the whole thing.
 ```
 db.delete('ice_king')
 ```
+
+### EVEN NEWER in V3!
+Blasts from the past.
+```
+db.get(k='key_name', when='all')
+```
+The 'when' parameter takes a datetime value, with microsecond precision.
+
+Don't know what you are looking for? Get all versions or just the first version of a key:
+```
+db.get_first_version(k)
+db.get_versoins(k)
+```
+
 
 ## Changelog
 
@@ -69,4 +83,4 @@ Set keys. Get keys. Update keys. Key creation and updating is all still handled 
 Delete keys! Can you believe it? Removed type checks, added type notation to the functions parameters.
 
 ### v3
-
+Versions.

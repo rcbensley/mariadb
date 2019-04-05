@@ -15,12 +15,17 @@ sleep(1)
 pp(db.get())
 
 sleep(5)
+#  Opps! Not quite red enough.
 db.set('red', {'rgb': [255, 0, 0]})
-pp('Updated')
+print('Updated')
 pp(db.get('red'))
 
-pp('All:')
+print('All:')
 pp(db.get_versions('red'))
 
-pp('Then:')
+print('Then:')
 pp(db.get_first_version('red'))
+
+print('All things for all keys:')
+pp(db.get(when='all'))
+

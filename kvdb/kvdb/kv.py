@@ -67,7 +67,6 @@ class db:
 
         if k is None:
             sql = "SELECT _key,_value FROM kvdb {h}".format(h=h)
-            print(sql)
         else:
             sql = ("SELECT _key,_value FROM kvdb {h} "
                    " WHERE _key='{k}'").format(k=k, h=h)
