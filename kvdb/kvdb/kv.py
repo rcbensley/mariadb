@@ -20,9 +20,9 @@ class db:
             "id bigint(20) NOT NULL AUTO_INCREMENT,"
             "_key varchar(128) NOT NULL,"
             "_value JSON NOT NULL CHECK (JSON_VALID(_value)),"
-            "created timestamp NOT NULL "
+            "created timestamp(6) NOT NULL "
             "DEFAULT CURRENT_TIMESTAMP() ,"
-            "updated timestamp NOT NULL "
+            "updated timestamp(6) NOT NULL "
             "DEFAULT CURRENT_TIMESTAMP() "
             "ON UPDATE CURRENT_TIMESTAMP(),"
             "PRIMARY KEY (id),"
@@ -30,12 +30,7 @@ class db:
             "INDEX idx_date (created, updated)"
             ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4")
 
-        add_history = (
-            "ALTER TABLE kvdb"
-            "ADD COLUMN ts TIMESTAMP(6) GENERATED ALWAYS AS ROW START, "
-            "ADD COLUMN te TIMESTAMP(6) GENERATED ALWAYS AS ROW END,"
-            "ADD PERIOD FOR SYSTEM_TIME(ts, te),"
-            "ADD SYSTEM VERSIONING;")
+        add_history = "ALTER TABLE kvdb ADD SYSTEM VERSIONING;"
 
         self._query(drop)
         self._query(create)
@@ -64,15 +59,16 @@ class db:
 
     def get(self, k: dict = None, when: str = None):
         if when is not None:
-            h = "FOR SYSTEM_TIME AS OF TIMESTAMP'{}'".format(when)
+            h = "FOR SYSTEM_TIME AS OF '{}'".format(when)
         else:
             h = ""
 
         if k is None:
             sql = "SELECT _key,_value FROM kvdb {h}".format(h=h)
+            print(sql)
         else:
             sql = ("SELECT _key,_value FROM kvdb "
-                   "WHERE _key='{k}' {h}").format(k=k, h=h)
+                   " WHERE _key='{k}'").format(k=k)
 
         rows = self._query(sql)
         if rows:
