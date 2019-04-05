@@ -1,5 +1,3 @@
-from datetime import datetime as dt
-from datetime import timedelta as td
 from time import sleep
 from pprint import pprint as pp
 
@@ -21,10 +19,8 @@ db.set('red', {'rgb': [255, 0, 0]})
 pp('Updated')
 pp(db.get('red'))
 
-oldest_row = db._query(
-        "select created from kvdb"
-        " where _key='red'")
-then = oldest_row[0]['created']
+pp('All:')
+pp(db.get_versions('red'))
 
 pp('Then:')
-pp(db.get(when=then))
+pp(db.get_first_version('red'))

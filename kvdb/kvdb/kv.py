@@ -58,7 +58,9 @@ class db:
         return f_j
 
     def get(self, k: dict = None, when: str = None):
-        if when is not None:
+        if when == 'all':
+            h = "FOR SYSTEM_TIME all"
+        elif when is not None:
             h = "FOR SYSTEM_TIME AS OF '{}'".format(when)
         else:
             h = ""
@@ -67,8 +69,8 @@ class db:
             sql = "SELECT _key,_value FROM kvdb {h}".format(h=h)
             print(sql)
         else:
-            sql = ("SELECT _key,_value FROM kvdb "
-                   " WHERE _key='{k}'").format(k=k)
+            sql = ("SELECT _key,_value FROM kvdb {h} "
+                   " WHERE _key='{k}'").format(k=k, h=h)
 
         rows = self._query(sql)
         if rows:
@@ -96,3 +98,17 @@ class db:
     def delete(self, k: str):
         sql = "DELETE FROM kvdb WHERE _key='{}'".format(k)
         self._query(sql)
+
+    def created_date(self, k: str):
+        s = "select created from kvdb where _key='{}'".format(k)
+        return self._query(s)
+
+    def get_first_version(self, k: str):
+        v = self.created_date(k)
+        date = v[0]['created']
+        if v is not False:
+            return(self.get(k=k, when=date))
+
+    def get_versions(self, k: str):
+        return self.get(k=k, when='all')
+
