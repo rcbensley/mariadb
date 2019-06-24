@@ -1,3 +1,3 @@
 SQL Frights and ACID delights.
 
-Notes, tools, snippets, and random scripts for MariaDB.
+Notes, snippets, rants and what not related to my DBA activities.
