@@ -4,6 +4,7 @@ I love that it's widely used by students, professionals, scientists, researchers
 The amount of mind share around python is unprecedented and unmatched.
 
 I hate that it's ubiquity was partly responsible for the demise of Scheme and Lisp. Boo!
+I love that some of what makes Lisp awesome is in Python. Yay!
 
 ## Versions
 |OS|Version|Source|Notes|
