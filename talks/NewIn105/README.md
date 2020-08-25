@@ -1,19 +1,24 @@
-What's new in MariaDB 10.5?
+## What is MariaDB?
 
-A little about me.
-Lamp from around 2003.
+A fork of MySQL, made by the original developers.
+Don't listen to me, [listen to Monty tell the tale](https://www.youtube.com/watch?v=xtNIRkRl-s4) in a recent interview.
 
-Professional Experience with MariaDB standalone and in migrations.
-MySQL
-MySQL to Clustrix
-Oracle to MySQL
-Sybase to MariaDB
-MySQL to Infobright
-MSSQL to MariaDB
-MySQL to MariaDB
-Infobright to Redshift
 
-What is MariaDB?
+
+
+## Professional Experience with MariaDB
+
+* MySQL and MySQL Cluster
+* MySQL to Clustrix
+* Oracle to MySQL
+* Sybase to MariaDB
+* MySQL to Infobright
+* MSSQL to MariaDB
+* MySQL to MariaDB
+* Infobright to Redshift
+* MariaDB Enterprise, and SkySQL
+
+
 
 Timeline graph
 mysql ab
@@ -31,21 +36,27 @@ clustrix
 
 Why MariaDB?
 
-5.0, 5.1, 5.2, 5.3
+## What's old in MariaDB?
 
-10.0
+* https://mariadb.com/kb/en/changes-improvements-in-mariadb-100/
+** GTID, Parallel and multi-source replication.
+* https://mariadb.com/kb/en/changes-improvements-in-mariadb-101/
+** Galera, and GIS support.
+* https://mariadb.com/kb/en/changes-improvements-in-mariadb-102/
+** InnoDB becomes the default engine over XtraDB.
+* https://mariadb.com/kb/en/changes-improvements-in-mariadb-103/
+** Spider, Online DDL, Temporal Data Tables, 
+* https://mariadb.com/kb/en/changes-improvements-in-mariadb-104/
+** More online DDL, BACKUP STAGE, Galera 4
 
-10.1
 
-10.2
+## What's new in MariaDB?
 
-10.3
+* https://mariadb.com/kb/en/changes-improvements-in-mariadb-105/
 
-10.4
+InnoDB rewrite beings.
+	Became the default in 10.2.
+	Online operations in 10.3 and 10.4.
+	Rewrite starts in 10.5.
 
-10.5!
-
-
-Enterprise
-MaxScale, BSL
-Xpand
+Columnstore Integrated.
