@@ -3,38 +3,27 @@
 A fork of MySQL, made by the original developers.
 Don't listen to me, [listen to Monty tell the tale](https://www.youtube.com/watch?v=xtNIRkRl-s4) in a recent interview.
 
+Why MariaDB?
 
+Why not MariaDB?
+
+## MariaDB Server Fest Online Conference
+14-20 Sept. 2020
+
+https://mariadb.org/fest2020/
 
 
 ## Professional Experience with MariaDB
 
 * MySQL and MySQL Cluster
+* Infobright
 * MySQL to Clustrix
-* Oracle to MySQL
-* Sybase to MariaDB
-* MySQL to Infobright
-* MSSQL to MariaDB
+* Oracle 9/10 to MySQL
+* Sybase ASE to MariaDB
+* MS SQL Server to MariaDB
 * MySQL to MariaDB
 * Infobright to Redshift
 * MariaDB Enterprise, and SkySQL
-
-
-
-Timeline graph
-mysql ab
-sun
-oracle
-infobright
-google
-facebook
-rocksdb
-pbx?
-tokudb
-infinidb
-infobright
-clustrix
-
-Why MariaDB?
 
 ## What's old in MariaDB?
 
@@ -52,11 +41,24 @@ Why MariaDB?
 
 ## What's new in MariaDB?
 
-* https://mariadb.com/kb/en/changes-improvements-in-mariadb-105/
+All new features: https://mariadb.com/kb/en/changes-improvements-in-mariadb-105/
 
-InnoDB rewrite beings.
-	Became the default in 10.2.
-	Online operations in 10.3 and 10.4.
-	Rewrite starts in 10.5.
+* Binaries and symlinks
 
-Columnstore Integrated.
+###InnoDB re-write begins.
+* Became the default in 10.2.
+* Online operations in 10.3 and 10.4.
+* Rewrite starts in 10.5.
+
+###S3 Storage Engine
+Create tables in S3 (and the like).
+* (libmariaS3)[https://github.com/mariadb-corporation/libmarias3]
+
+###Columnstore Integrated.
+* De-normalised data structures.
+* Bulk inserts.
+* Super-fast, distributed query performance.
+
+* New Installation procedure: https://mariadb.com/docs/features/whats-new/whats-new-in-columnstore-15/#whats-new-col-15-oam-replacement
+* Transition notes: https://mariadb.com/docs/features/whats-new/whats-new-in-columnstore-15/#whats-new-col-15-oam-replacement
+
