@@ -52,9 +52,11 @@ All new features: https://mariadb.com/kb/en/changes-improvements-in-mariadb-105/
 
 ###S3 Storage Engine
 Create tables in S3 (and the like).
+
 * (libmariaS3)[https://github.com/mariadb-corporation/libmarias3]
 
 ###Columnstore Integrated.
+
 * De-normalised data structures.
 * Bulk inserts.
 * Super-fast, distributed query performance.
