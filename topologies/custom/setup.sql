@@ -7,12 +7,12 @@ SET PASSWORD FOR root@localhost=password('dev');
 GRANT SELECT ON *.* to 'testuser'@'localhost' IDENTIFIED BY 'trouble';
 
 CREATE TABLE users (username varchar(64) primary key not null, 
-	status tinyint(1) not null default 0);
+	allowed tinyint(1) not null default 0);
 
 INSERT INTO auth.users VALUES ('root', 1), ('vagrant', 1), ('testuser', 0);
 
-# UPDATE auth.users SET status=0 WHERE username='testuser';
-# UPDATE auth.users SET status=1 WHERE username='testuser';
+# UPDATE auth.users SET allowed=0 WHERE username='testuser';
+# UPDATE auth.users SET allowed=1 WHERE username='testuser';
 
 DROP DATABASE IF EXISTS dba;
 CREATE DATABASE IF NOT EXISTS dba;

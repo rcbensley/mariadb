@@ -14,7 +14,7 @@ DECLARE v_process_id INT;
 SET v_allowed = 0;
 
 SELECT SUBSTRING_INDEX(USER(),'@',1) INTO v_current_user;
-SELECT status FROM auth.users WHERE username=v_current_user INTO v_allowed;
+SELECT allowed FROM auth.users WHERE username=v_current_user INTO v_allowed;
 SELECT CONNECTION_ID() INTO v_process_id;
 
 IF v_allowed = 0 THEN
