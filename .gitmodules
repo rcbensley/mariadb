@@ -1,0 +1,3 @@
+[submodule "talks/mariadb-and-python"]
+	path = talks/mariadb-and-python
+	url = git@github.com:rcbensley/mariadb-and-python.git
