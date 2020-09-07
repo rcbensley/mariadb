@@ -9,7 +9,7 @@ GRANT SELECT ON *.* to 'testuser'@'localhost' IDENTIFIED BY 'trouble';
 CREATE TABLE users (username varchar(64) primary key not null, 
 	allowed tinyint(1) not null default 0);
 
-INSERT INTO auth.users VALUES ('root', 1), ('vagrant', 1), ('testuser', 0);
+INSERT INTO auth.users VALUES ('root', 1), ('vagrant', 1), ('testuser', 0), ('jam', 1);
 
 # UPDATE auth.users SET allowed=0 WHERE username='testuser';
 # UPDATE auth.users SET allowed=1 WHERE username='testuser';
@@ -23,3 +23,4 @@ CREATE TABLE cnf (section char(16) flag=1,
 	VARIABLE_VALUE varchar(2048))
 	engine=CONNECT table_type=INI file_name='/mnt/db/my.cnf'
 	option_list='Layout=Row';
+
